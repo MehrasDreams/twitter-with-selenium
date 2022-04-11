@@ -45,9 +45,9 @@ driver.find_element_by_xpath(next_button_path).click()
 
 # Bypass the security check
 time.sleep(7)
-driver.find_element_by_xpath(username_phone_xpath).send_keys(phone)
-driver.find_element_by_xpath(next_for_username_path).click()
-time.sleep(5)
+# driver.find_element_by_xpath(username_phone_xpath).send_keys(phone)
+# driver.find_element_by_xpath(next_for_username_path).click()
+# time.sleep(5)
 driver.find_element_by_xpath(password_xpath).send_keys(password)
 driver.find_element_by_xpath(login_button_xpath).click()
 time.sleep(5)
@@ -61,6 +61,7 @@ driver.get('https://twitter.com/{}/followers'.format(username_input))
 time.sleep(4)
 
 #
+time.sleep(9)
 follower_list = []
 # Code to goto End of the Page
 last_height = driver.execute_script("return document.body.scrollHeight")
@@ -68,7 +69,7 @@ while True:
     # Scroll down to bottom
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     # Wait to load page
-    time.sleep(1)
+    time.sleep(4)
     # Calculate new scroll height and compare with last scroll height
     new_height = driver.execute_script("return document.body.scrollHeight")
     if new_height == last_height:
@@ -77,12 +78,13 @@ while True:
 
     #get usernames element
     usernames = driver.find_elements_by_css_selector(
-            "css-18t94o4.css-1dbjc4n.r-1ny4l3l.r-1j3t67a.r-1w50u8q.r-o7ynqc.r-6416eg")
+            ".css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l")
     print(len(usernames))
     for username in usernames:
-        username = username.find_element_by_css_selector("css-18t94o4.css-1dbjc4n.r-1ny4l3l.r-1j3t67a.r-1w50u8q.r-o7ynqc.r-6416eg").get_attribute("href")
-        if username not in follower_list:
-            follower_list.append(username)
-
-print(len(follower_list))
+        # username = driver.find_element_by_css_selector(".css-4rbku5.css-18t94o4.css-1dbjc4n.r-1loqt21.r-1wbh5a2.r-dnmrzs.r-1ny4l3l").get_attribute("href")
+        new_user = username.accessible_name
+        if new_user not in follower_list:
+            follower_list.append(new_user)
+            print(new_user)
 print(follower_list)
+print(len(follower_list))
